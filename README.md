@@ -12,7 +12,20 @@ docker-compose build && docker compose up
 
 **Base de datos:** SQLite. El fichero `wiki.db` se crea solo al arrancar (con tablas `Users`, `Games`, `Characters`). En Docker se persiste en el volumen `wiki-data`.
 
-Cuando añadas el frontend, inclúyelo en `docker-compose.yml` y documenta aquí la URL (por ejemplo http://localhost:5173).
+## Frontend (Vue 3)
+
+Desarrollo local (con el backend en marcha en el puerto 8080):
+
+```bash
+cd frontend
+cp .env.example .env   # opcional: .env ya tiene VITE_API_URL=http://localhost:8080
+npm install
+npm run dev
+```
+
+- **App:** http://localhost:5173  
+
+Stack: Vue 3 (Composition API), TypeScript, Vue Router, Pinia, Bootstrap Vue 3, Vite. Estructura: `src/views`, `src/components`, `src/layouts`, `src/stores`, `src/services`, `src/types`.
 
 ## Credenciales de prueba
 
