@@ -112,6 +112,23 @@ using (var scope = app.Services.CreateScope())
         });
         db.SaveChanges();
     }
+    var defaultGames = new[]
+    {
+        new Game { Name = "The Legend of Zelda: Breath of the Wild", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbf.png", Year = 2017, Description = "Aventura de mundo abierto de Nintendo. Explora Hyrule, resuelve santuarios y enfréntate a Ganon." },
+        new Game { Name = "Elden Ring", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co4j1z.png", Year = 2022, Description = "RPG de acción de FromSoftware con mundo abierto. Historia de George R. R. Martin y gameplay tipo Souls." },
+        new Game { Name = "Red Dead Redemption 2", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbd.png", Year = 2018, Description = "Western de Rockstar. Vive la historia de Arthur Morgan y la banda de Dutch en el Lejano Oeste." },
+        new Game { Name = "God of War Ragnarök", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co6boo.png", Year = 2022, Description = "Secuela de God of War (2018). Kratos y Atreus se enfrentan al Ragnarök en los Nueve Reinos." },
+        new Game { Name = "Hollow Knight", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xzm.png", Year = 2017, Description = "Metroidvania indie. Explora Hallownest, mejora habilidades y descubre secretos en un mundo de insectos." },
+        new Game { Name = "Celeste", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbr.png", Year = 2018, Description = "Plataformas 2D de precisión. Madeline escala la montaña Celeste en una historia sobre ansiedad y superación." }
+    };
+    foreach (var game in defaultGames)
+    {
+        if (!db.Games.Any(g => g.Name == game.Name))
+        {
+            db.Games.Add(game);
+        }
+    }
+    db.SaveChanges();
 }
 
 app.UseCors();

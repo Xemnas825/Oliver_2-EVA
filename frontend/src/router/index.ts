@@ -23,6 +23,12 @@ const routes: RouteRecordRaw[] = [
         meta: { title: 'Juegos' },
       },
       {
+        path: 'juegos/:id',
+        name: 'game-detail',
+        component: () => import('@/views/GameDetailView.vue'),
+        meta: { title: 'Detalle del juego' },
+      },
+      {
         path: 'personajes',
         name: 'characters',
         component: () => import('@/views/CharactersListView.vue'),

@@ -6,24 +6,23 @@ Resumen para retomar el proyecto desde otro PC sin depender del historial de cha
 
 ## Estado del proyecto
 
-- **Backend:** .NET 8, ASP.NET Core, SQLite, JWT, Swagger. Listo y con tests.
-- **Frontend:** Vue 3 + Vite + TypeScript + Pinia + Vue Router + **bootstrap-vue-next** (no bootstrap-vue-3). Feature **feature/setup** hecha.
+- **Backend:** .NET 8, ASP.NET Core, SQLite, JWT, Swagger. API en `backend/` (Program.cs, DTOs, Models, AppDbContext). **Sin carpeta Tests** (se eliminó; solo queda el proyecto API). Dockerfile publica explícitamente `Backend.csproj`.
+- **Frontend:** Vue 3 + Vite + TypeScript + Pinia + Vue Router + **bootstrap-vue-next** (no bootstrap-vue-3). Estructura: `src/views`, `components`, `layouts`, `stores`, `services`, `types`.
 
 ---
 
 ## Ramas (GitFlow)
 
-| Rama | Uso |
-|------|-----|
+| Rama | Estado |
+|------|--------|
 | `main` | Código estable / entrega |
 | `develop` | Integración; aquí se fusionan las feature |
 | `feature/setup` | ✅ Hecha (Vue, Router, Pinia, Bootstrap, estructura) |
-| `feature/layouts` | Siguiente: LayoutAuth, LayoutPublic, LayoutAdmin + Header/Footer (público y admin) |
-| `feature/auth` | Login, registro, store auth, guards |
-| `feature/games` | Listado + CRUD juegos |
-| `feature/characters` | Listado + CRUD personajes |
-| `feature/home` | Página principal pública |
-| `feature/admin` | Pantalla administración |
+| `feature/layouts` | ✅ Hecha (LayoutAuth, LayoutPublic, LayoutAdmin, Header/Footer) |
+| `feature/auth` | ✅ Hecha (login, registro, store auth, guards, VeeValidate+Yup) |
+| `feature/games` | ✅ Hecha (store games, GameCard, GamesListView, GameDetailView, AdminGamesView CRUD, GameForm, seed 6 juegos) |
+| `feature/characters` | Pendiente |
+| `feature/home` | Pendiente |
 
 ---
 
@@ -33,7 +32,7 @@ Resumen para retomar el proyecto desde otro PC sin depender del historial de cha
 ```bash
 docker compose build && docker compose up
 ```
-- API + Swagger: http://localhost:8080 (puerto 8080 porque en Mac el 5000 lo usa AirPlay)
+- API + Swagger: http://localhost:8080
 
 **Frontend:**
 ```bash
@@ -42,35 +41,41 @@ npm install
 npm run dev
 ```
 - App: http://localhost:5173  
-- `.env` tiene `VITE_API_URL=http://localhost:8080`
+- `.env`: `VITE_API_URL=` vacío para usar el proxy de Vite a `/api` → backend en 8080 (`vite.config.ts`).
 
 **Credenciales prueba:** admin@wiki.com / admin123 (admin), usuario@wiki.com / usuario123 (user).
 
 ---
 
-## Qué toca en feature/layouts
+## Rutas y archivos relevantes
 
-1. **Tres layouts:** LayoutAuth (sin header/footer para login y registro), LayoutPublic (Header + Footer), LayoutAdmin (HeaderAdmin + FooterAdmin).
-2. **Componentes:** Header, Footer (público), HeaderAdmin, FooterAdmin. Header con sección actual (resaltado o breadcrumbs).
-3. **Router:** Asignar cada ruta a un layout vía `meta.layout`. Vistas mínimas: Login, Registro, Admin (placeholder).
-4. HomeView ya existe; usará LayoutPublic.
+**Backend:** `backend/Program.cs`, `backend/DTOs/GameDtos.cs`, `backend/Models/Game.cs`, `backend/Data/AppDbContext.cs`. Seed de usuarios (admin + usuario) y de **6 juegos** al arrancar (se añaden por nombre si no existen: Zelda BOTW, Elden Ring, Red Dead 2, God of War Ragnarök, Hollow Knight, Celeste).
 
----
-
-## Cambios importantes que ya están hechos
-
-- Backend: BCrypt como `BCrypt.Net.BCrypt` (no solo `BCrypt`). JWT con claims `sub` y `role`. Swagger en la raíz (http://localhost:8080).
-- Frontend: **bootstrap-vue-next** con setup **BApp** en App.vue (no bootstrap-vue-3, está deprecado). Excluir carpeta `Tests` en Backend.csproj para que compile solo el API.
+**Frontend:**  
+- Router: `frontend/src/router/index.ts`  
+- Stores: `auth.ts`, `games.ts`  
+- Vistas: LoginView, RegisterView, GamesListView, GameDetailView, AdminGamesView  
+- Componentes: AppHeader, GameCard, GameForm  
+- API: `frontend/src/services/api.ts` (axios, baseURL, interceptor 401)
 
 ---
 
-## Tests backend (sin .NET instalado)
+## Detalles ya resueltos
 
-```bash
-cd backend
-docker run --rm -v "$(pwd):/src" -w /src mcr.microsoft.com/dotnet/sdk:8.0 dotnet test WikiVideojuegos.sln
-```
+- **BCrypt:** usar `BCrypt.Net.BCrypt.HashPassword` / `Verify` en backend.
+- **Bootstrap:** bootstrap-vue-next con `BApp` en App.vue (no bootstrap-vue-3).
+- **Formularios:** VeeValidate + Yup, `<form>` nativo con `@submit.prevent`; errores con BAlert (no alerts nativos). Confirmaciones con BModal (no `confirm()` nativo).
+- **Docker:** en el Dockerfile usar `dotnet publish Backend.csproj` porque en la carpeta ya no hay solución con varios proyectos.
+- **GameCard:** solo muestra imagen si `imageUrl` es una URL válida (http/https) para evitar icono roto.
 
 ---
 
-Cuando sigas desde el otro PC: abre este archivo, haz `git pull`, y continúa por la rama que toque (por ejemplo `feature/layouts`).
+## Próximos pasos posibles
+
+- Feature **characters**: store, listado público, detalle, AdminCharactersView CRUD.
+- Feature **home**: página principal pública.
+- Actualizar este archivo cuando se cierre una rama o se añadan features.
+
+---
+
+Cuando sigas desde otro PC: abre este archivo, haz `git pull`, y continúa por la rama que toque (por ejemplo `feature/characters`).
