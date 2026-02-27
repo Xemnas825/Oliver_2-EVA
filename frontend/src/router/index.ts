@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import LayoutAuth from '@/layouts/LayoutAuth.vue'
 import LayoutPublic from '@/layouts/LayoutPublic.vue'
 import LayoutAdmin from '@/layouts/LayoutAdmin.vue'
@@ -56,6 +57,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     component: LayoutAdmin,
+    meta: { requiresAuth: true, requiresAdmin: true },
     children: [
       {
         path: '',
@@ -86,6 +88,25 @@ const router = createRouter({
 
 router.beforeEach((to, _from, next) => {
   document.title = to.meta.title ? `${to.meta.title} | Wiki Videojuegos` : 'Wiki Videojuegos'
+
+  const authStore = useAuthStore()
+  const requiresAuth = to.matched.some((r) => r.meta.requiresAuth)
+  const requiresAdmin = to.matched.some((r) => r.meta.requiresAdmin)
+  const isAuthPage = to.name === 'login' || to.name === 'register'
+
+  if (requiresAuth && !authStore.isAuthenticated) {
+    next({ name: 'login', query: { redirect: to.fullPath } })
+    return
+  }
+  if (requiresAdmin && !authStore.isAdmin) {
+    next({ path: '/' })
+    return
+  }
+  if (isAuthPage && authStore.isAuthenticated) {
+    next({ path: authStore.isAdmin ? '/admin' : '/' })
+    return
+  }
+
   next()
 })
 
