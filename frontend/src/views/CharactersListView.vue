@@ -23,8 +23,9 @@ onMounted(() => {
   charactersStore.fetchCharacters(gameIdFilter.value)
 })
 
-function onFilterChange(gameId: number | string) {
-  const id = gameId === '' || gameId === 0 ? undefined : Number(gameId)
+function onFilterChange(value: string | number | (string | number)[] | null) {
+  if (value == null || Array.isArray(value)) return
+  const id = value === '' || value === 0 ? undefined : Number(value)
   router.push({ query: id != null ? { gameId: id } : {} })
   charactersStore.fetchCharacters(id)
 }

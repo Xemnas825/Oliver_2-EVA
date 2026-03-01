@@ -2,7 +2,6 @@
 import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGamesStore } from '@/stores/games'
-import GameCard from '@/components/GameCard.vue'
 import { BButton, BAlert } from 'bootstrap-vue-next'
 
 const route = useRoute()

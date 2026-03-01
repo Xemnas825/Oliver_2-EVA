@@ -93,13 +93,13 @@ const onSubmit = handleSubmit((values) => {
     </div>
     <div class="mb-3">
       <label class="form-label">Descripción</label>
-      <BFormInput
+      <textarea
         v-model="description"
         v-bind="descriptionAttrs"
-        type="textarea"
+        class="form-control"
+        :class="{ 'is-invalid': errors.description }"
         rows="3"
         placeholder="Descripción del personaje"
-        :state="errors.description ? false : undefined"
       />
       <div class="form-text text-danger">{{ errors.description }}</div>
     </div>

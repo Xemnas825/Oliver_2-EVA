@@ -4,7 +4,7 @@ import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
 import type { Game } from '@/types'
 import type { GameForm } from '@/stores/games'
-import { BFormInput, BButton, BForm } from 'bootstrap-vue-next'
+import { BFormInput, BButton } from 'bootstrap-vue-next'
 
 const props = defineProps<{
   game?: Game | null
@@ -21,7 +21,7 @@ const schema = yup.object({
   description: yup.string().nullable(),
 })
 
-const { defineField, handleSubmit, errors, setFieldValue } = useForm({
+const { defineField, handleSubmit, errors } = useForm({
   validationSchema: toTypedSchema(schema),
   initialValues: {
     name: props.game?.name ?? '',
@@ -40,7 +40,7 @@ const onSubmit = handleSubmit((values) => {
   emit('submit', {
     name: values.name,
     imageUrl: values.imageUrl && values.imageUrl.trim() ? values.imageUrl.trim() : null,
-    year: values.year != null && values.year !== '' ? Number(values.year) : null,
+    year: values.year != null ? Number(values.year) : null,
     description: values.description && values.description.trim() ? values.description.trim() : null,
   })
 })
@@ -85,13 +85,13 @@ const onSubmit = handleSubmit((values) => {
     </div>
     <div class="mb-3">
       <label class="form-label">Descripción</label>
-      <BFormInput
+      <textarea
         v-model="description"
         v-bind="descriptionAttrs"
-        type="textarea"
+        class="form-control"
+        :class="{ 'is-invalid': errors.description }"
         rows="3"
         placeholder="Descripción del juego"
-        :state="errors.description ? false : undefined"
       />
       <div class="form-text text-danger">{{ errors.description }}</div>
     </div>
