@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
 import type { Character } from '@/types'
 import type { CharacterForm } from '@/stores/characters'
 import { useGamesStore } from '@/stores/games'
+import { useI18n } from 'vue-i18n'
 import { BFormInput, BButton, BFormSelect } from 'bootstrap-vue-next'
 
 const props = defineProps<{
@@ -17,11 +18,12 @@ const emit = defineEmits<{
 }>()
 
 const gamesStore = useGamesStore()
+const { t } = useI18n()
 
 const schema = yup.object({
-  name: yup.string().required('El nombre es obligatorio').min(1, 'El nombre es obligatorio'),
-  gameId: yup.number().required('Selecciona un juego').integer().min(1, 'Selecciona un juego'),
-  imageUrl: yup.string().url('Debe ser una URL válida').nullable(),
+  name: yup.string().required(() => t('validation.nameRequired')).min(1, () => t('validation.nameRequired')),
+  gameId: yup.number().required(() => t('validation.selectGame')).integer().min(1, () => t('validation.selectGame')),
+  imageUrl: yup.string().url(() => t('validation.urlInvalid')).nullable(),
   description: yup.string().nullable(),
 })
 
@@ -40,6 +42,11 @@ const [gameId, gameIdAttrs] = defineField('gameId')
 const [imageUrl, imageUrlAttrs] = defineField('imageUrl')
 const [description, descriptionAttrs] = defineField('description')
 
+const gameOptions = computed(() => [
+  { value: 0, text: t('characterForm.selectGamePlaceholder') },
+  ...gamesStore.games.map((g) => ({ value: g.id, text: g.name })),
+])
+
 onMounted(() => {
   gamesStore.fetchGames()
 })
@@ -57,31 +64,28 @@ const onSubmit = handleSubmit((values) => {
 <template>
   <form @submit.prevent="onSubmit">
     <div class="mb-3">
-      <label class="form-label">Nombre</label>
+      <label class="form-label">{{ t('characterForm.name') }}</label>
       <BFormInput
         v-model="name"
         v-bind="nameAttrs"
         type="text"
-        placeholder="Nombre del personaje"
+        :placeholder="t('characterForm.namePlaceholder')"
         :state="errors.name ? false : undefined"
       />
       <div class="form-text text-danger">{{ errors.name }}</div>
     </div>
     <div class="mb-3">
-      <label class="form-label">Juego</label>
+      <label class="form-label">{{ t('characterForm.game') }}</label>
       <BFormSelect
         v-model="gameId"
         v-bind="gameIdAttrs"
-        :options="[
-          { value: 0, text: '-- Selecciona un juego --' },
-          ...gamesStore.games.map((g) => ({ value: g.id, text: g.name })),
-        ]"
+        :options="gameOptions"
         :state="errors.gameId ? false : undefined"
       />
       <div class="form-text text-danger">{{ errors.gameId }}</div>
     </div>
     <div class="mb-3">
-      <label class="form-label">URL de imagen</label>
+      <label class="form-label">{{ t('characterForm.imageUrl') }}</label>
       <BFormInput
         v-model="imageUrl"
         v-bind="imageUrlAttrs"
@@ -92,20 +96,20 @@ const onSubmit = handleSubmit((values) => {
       <div class="form-text text-danger">{{ errors.imageUrl }}</div>
     </div>
     <div class="mb-3">
-      <label class="form-label">Descripción</label>
+      <label class="form-label">{{ t('characterForm.description') }}</label>
       <textarea
         v-model="description"
         v-bind="descriptionAttrs"
         class="form-control"
         :class="{ 'is-invalid': errors.description }"
         rows="3"
-        placeholder="Descripción del personaje"
+        :placeholder="t('characterForm.descriptionPlaceholder')"
       />
       <div class="form-text text-danger">{{ errors.description }}</div>
     </div>
     <div class="d-flex gap-2 justify-content-end">
       <slot name="cancel" />
-      <BButton type="submit" variant="primary">Guardar</BButton>
+      <BButton type="submit" variant="primary">{{ t('common.save') }}</BButton>
     </div>
   </form>
 </template>

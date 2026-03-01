@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useGamesStore } from '@/stores/games'
 import GameCard from '@/components/GameCard.vue'
-import { BAlert } from 'bootstrap-vue-next'
+import { BAlert, BButton } from 'bootstrap-vue-next'
 
+const { t } = useI18n()
 const gamesStore = useGamesStore()
 
 onMounted(() => {
@@ -13,18 +15,18 @@ onMounted(() => {
 
 <template>
   <div class="container py-4">
-    <h1 class="mb-4">Juegos</h1>
+    <h1 class="mb-4">{{ t('games.title') }}</h1>
 
     <BAlert v-if="gamesStore.error" variant="danger" dismissible>
       {{ gamesStore.error }}
     </BAlert>
 
     <div v-if="gamesStore.loading" class="text-center py-5">
-      Cargando…
+      {{ t('common.loading') }}
     </div>
 
     <div v-else-if="gamesStore.games.length === 0" class="text-muted text-center py-5">
-      No hay juegos todavía.
+      {{ t('games.noGamesYet') }}
     </div>
 
     <div v-else class="row g-4">
@@ -40,7 +42,7 @@ onMounted(() => {
               size="sm"
               :to="{ name: 'game-detail', params: { id: game.id } }"
             >
-              Ver más
+              {{ t('common.viewMore') }}
             </BButton>
           </template>
         </GameCard>

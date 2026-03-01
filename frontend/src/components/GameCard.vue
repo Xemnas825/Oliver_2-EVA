@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { Game } from '@/types'
 import { BCard, BCardBody, BCardTitle, BCardText } from 'bootstrap-vue-next'
 
 const props = defineProps<{
   game: Game
 }>()
+const { t } = useI18n()
 
 const truncate = (text: string | null, max: number) => {
   if (!text) return ''
@@ -31,7 +33,7 @@ const hasValidImageUrl = computed(() => {
     <BCardBody class="d-flex flex-column">
       <BCardTitle>{{ game.name }}</BCardTitle>
       <BCardText v-if="game.year" class="text-muted small mb-1">
-        Año: {{ game.year }}
+        {{ t('common.year') }}: {{ game.year }}
       </BCardText>
       <BCardText class="flex-grow-1 small">
         {{ truncate(game.description, 120) }}

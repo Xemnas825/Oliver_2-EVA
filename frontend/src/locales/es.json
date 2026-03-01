@@ -1,0 +1,123 @@
+{
+  "common": {
+    "loading": "Cargando…",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "viewMore": "Ver más",
+    "backToList": "← Volver al listado",
+    "noDescription": "Sin descripción.",
+    "year": "Año",
+    "game": "Juego"
+  },
+  "nav": {
+    "appName": "Wiki Videojuegos",
+    "appNameAdmin": "Wiki Videojuegos — Admin",
+    "home": "Inicio",
+    "games": "Juegos",
+    "characters": "Personajes",
+    "admin": "Administración",
+    "panel": "Panel",
+    "login": "Iniciar sesión",
+    "register": "Registro",
+    "logout": "Cerrar sesión",
+    "goToSite": "Salir al sitio",
+    "language": "Idioma"
+  },
+  "home": {
+    "title": "Wiki Videojuegos",
+    "subtitle": "Descubre juegos y personajes. Explora fichas, descripciones y enlaces a tus títulos favoritos.",
+    "seeAllGames": "Ver todos los juegos →",
+    "seeAllCharacters": "Ver todos los personajes →",
+    "noGames": "Aún no hay juegos.",
+    "noCharacters": "Aún no hay personajes.",
+    "loadingGames": "Cargando juegos…",
+    "loadingCharacters": "Cargando personajes…"
+  },
+  "games": {
+    "title": "Juegos",
+    "noGamesYet": "No hay juegos todavía.",
+    "adminTitle": "Administrar Juegos",
+    "addGame": "Añadir juego",
+    "noGamesAddFirst": "No hay juegos. Añade el primero.",
+    "newGame": "Nuevo juego",
+    "editGame": "Editar juego",
+    "deleteGame": "Eliminar juego",
+    "deleteGameConfirm": "¿Eliminar {name}?",
+    "detailTitle": "Detalle del juego"
+  },
+  "characters": {
+    "title": "Personajes",
+    "filterByGame": "Filtrar por juego:",
+    "all": "Todos",
+    "noCharacters": "No hay personajes.",
+    "adminTitle": "Administrar Personajes",
+    "addCharacter": "Añadir personaje",
+    "noCharactersAddFirst": "No hay personajes. Añade el primero.",
+    "newCharacter": "Nuevo personaje",
+    "editCharacter": "Editar personaje",
+    "deleteCharacter": "Eliminar personaje",
+    "deleteCharacterConfirm": "¿Eliminar {name}?",
+    "detailTitle": "Detalle del personaje",
+    "selectGame": "Selecciona un juego"
+  },
+  "auth": {
+    "loginTitle": "Iniciar sesión",
+    "registerTitle": "Registro",
+    "email": "Email",
+    "password": "Contraseña",
+    "name": "Nombre",
+    "repeatPassword": "Repetir contraseña",
+    "submitLogin": "Entrar",
+    "submitRegister": "Registrarse",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "signUp": "Regístrate",
+    "signIn": "Inicia sesión",
+    "emailPlaceholder": "correo@ejemplo.com",
+    "namePlaceholder": "Tu nombre"
+  },
+  "admin": {
+    "title": "Panel de administración",
+    "manageGames": "Gestionar listado y CRUD de juegos.",
+    "manageCharacters": "Gestionar listado y CRUD de personajes.",
+    "goToGames": "Ir a Juegos",
+    "goToCharacters": "Ir a Personajes"
+  },
+  "gameForm": {
+    "name": "Nombre",
+    "namePlaceholder": "Nombre del juego",
+    "imageUrl": "URL de imagen",
+    "year": "Año",
+    "yearPlaceholder": "2020",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Descripción del juego"
+  },
+  "characterForm": {
+    "name": "Nombre",
+    "namePlaceholder": "Nombre del personaje",
+    "game": "Juego",
+    "selectGamePlaceholder": "-- Selecciona un juego --",
+    "imageUrl": "URL de imagen",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Descripción del personaje"
+  },
+  "footer": {
+    "tagline": "Listados de juegos y personajes."
+  },
+  "validation": {
+    "nameRequired": "El nombre es obligatorio",
+    "emailRequired": "El email es obligatorio",
+    "emailInvalid": "Email no válido",
+    "passwordRequired": "La contraseña es obligatoria",
+    "passwordMin": "Mínimo 6 caracteres",
+    "nameMin": "Mínimo 2 caracteres",
+    "confirmPasswordRequired": "Confirma la contraseña",
+    "passwordsMatch": "Las contraseñas no coinciden",
+    "urlInvalid": "Debe ser una URL válida",
+    "yearInteger": "Año entero",
+    "yearValid": "Año válido",
+    "selectGame": "Selecciona un juego"
+  }
+}

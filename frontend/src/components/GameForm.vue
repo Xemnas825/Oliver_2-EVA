@@ -4,6 +4,7 @@ import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
 import type { Game } from '@/types'
 import type { GameForm } from '@/stores/games'
+import { useI18n } from 'vue-i18n'
 import { BFormInput, BButton } from 'bootstrap-vue-next'
 
 const props = defineProps<{
@@ -14,10 +15,12 @@ const emit = defineEmits<{
   submit: [form: GameForm]
 }>()
 
+const { t } = useI18n()
+
 const schema = yup.object({
-  name: yup.string().required('El nombre es obligatorio').min(1, 'El nombre es obligatorio'),
-  imageUrl: yup.string().url('Debe ser una URL válida').nullable(),
-  year: yup.number().nullable().integer('Año entero').min(1900, 'Año válido').max(2100, 'Año válido'),
+  name: yup.string().required(() => t('validation.nameRequired')).min(1, () => t('validation.nameRequired')),
+  imageUrl: yup.string().url(() => t('validation.urlInvalid')).nullable(),
+  year: yup.number().nullable().integer(() => t('validation.yearInteger')).min(1900, () => t('validation.yearValid')).max(2100, () => t('validation.yearValid')),
   description: yup.string().nullable(),
 })
 
@@ -49,18 +52,18 @@ const onSubmit = handleSubmit((values) => {
 <template>
   <form @submit.prevent="onSubmit">
     <div class="mb-3">
-      <label class="form-label">Nombre</label>
+      <label class="form-label">{{ t('gameForm.name') }}</label>
       <BFormInput
         v-model="name"
         v-bind="nameAttrs"
         type="text"
-        placeholder="Nombre del juego"
+        :placeholder="t('gameForm.namePlaceholder')"
         :state="errors.name ? false : undefined"
       />
       <div class="form-text text-danger">{{ errors.name }}</div>
     </div>
     <div class="mb-3">
-      <label class="form-label">URL de imagen</label>
+      <label class="form-label">{{ t('gameForm.imageUrl') }}</label>
       <BFormInput
         v-model="imageUrl"
         v-bind="imageUrlAttrs"
@@ -71,12 +74,12 @@ const onSubmit = handleSubmit((values) => {
       <div class="form-text text-danger">{{ errors.imageUrl }}</div>
     </div>
     <div class="mb-3">
-      <label class="form-label">Año</label>
+      <label class="form-label">{{ t('gameForm.year') }}</label>
       <BFormInput
         v-model="year"
         v-bind="yearAttrs"
         type="number"
-        placeholder="2020"
+        :placeholder="t('gameForm.yearPlaceholder')"
         min="1900"
         max="2100"
         :state="errors.year ? false : undefined"
@@ -84,20 +87,20 @@ const onSubmit = handleSubmit((values) => {
       <div class="form-text text-danger">{{ errors.year }}</div>
     </div>
     <div class="mb-3">
-      <label class="form-label">Descripción</label>
+      <label class="form-label">{{ t('gameForm.description') }}</label>
       <textarea
         v-model="description"
         v-bind="descriptionAttrs"
         class="form-control"
         :class="{ 'is-invalid': errors.description }"
         rows="3"
-        placeholder="Descripción del juego"
+        :placeholder="t('gameForm.descriptionPlaceholder')"
       />
       <div class="form-text text-danger">{{ errors.description }}</div>
     </div>
     <div class="d-flex gap-2 justify-content-end">
       <slot name="cancel" />
-      <BButton type="submit" variant="primary">Guardar</BButton>
+      <BButton type="submit" variant="primary">{{ t('common.save') }}</BButton>
     </div>
   </form>
 </template>

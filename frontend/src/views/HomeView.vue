@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useGamesStore } from '@/stores/games'
 import { useCharactersStore } from '@/stores/characters'
 import GameCard from '@/components/GameCard.vue'
 import CharacterCard from '@/components/CharacterCard.vue'
 import { BButton, BAlert } from 'bootstrap-vue-next'
 
+const { t } = useI18n()
 const gamesStore = useGamesStore()
 const charactersStore = useCharactersStore()
 
@@ -20,12 +22,11 @@ onMounted(() => {
 
 <template>
   <div class="home-view">
-    <!-- Hero -->
     <section class="hero py-5 mb-4">
       <div class="container text-center">
-        <h1 class="display-5 fw-bold mb-3">Wiki Videojuegos</h1>
+        <h1 class="display-5 fw-bold mb-3">{{ t('home.title') }}</h1>
         <p class="lead text-muted mx-auto" style="max-width: 36rem;">
-          Descubre juegos y personajes. Explora fichas, descripciones y enlaces a tus títulos favoritos.
+          {{ t('home.subtitle') }}
         </p>
       </div>
     </section>
@@ -35,19 +36,18 @@ onMounted(() => {
         {{ gamesStore.error || charactersStore.error }}
       </BAlert>
 
-      <!-- Sección Juegos -->
       <section class="mb-5">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-          <h2 class="h4 mb-0">Juegos</h2>
+          <h2 class="h4 mb-0">{{ t('nav.games') }}</h2>
           <BButton variant="outline-primary" size="sm" :to="{ name: 'games' }">
-            Ver todos los juegos →
+            {{ t('home.seeAllGames') }}
           </BButton>
         </div>
         <div v-if="gamesStore.loading && previewGames.length === 0" class="text-muted py-4 text-center">
-          Cargando juegos…
+          {{ t('home.loadingGames') }}
         </div>
         <div v-else-if="previewGames.length === 0" class="text-muted py-4 text-center">
-          Aún no hay juegos.
+          {{ t('home.noGames') }}
         </div>
         <div v-else class="row g-4">
           <div
@@ -62,7 +62,7 @@ onMounted(() => {
                   size="sm"
                   :to="{ name: 'game-detail', params: { id: game.id } }"
                 >
-                  Ver más
+                  {{ t('common.viewMore') }}
                 </BButton>
               </template>
             </GameCard>
@@ -70,19 +70,18 @@ onMounted(() => {
         </div>
       </section>
 
-      <!-- Sección Personajes -->
       <section>
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-          <h2 class="h4 mb-0">Personajes</h2>
+          <h2 class="h4 mb-0">{{ t('nav.characters') }}</h2>
           <BButton variant="outline-primary" size="sm" :to="{ name: 'characters' }">
-            Ver todos los personajes →
+            {{ t('home.seeAllCharacters') }}
           </BButton>
         </div>
         <div v-if="charactersStore.loading && previewCharacters.length === 0" class="text-muted py-4 text-center">
-          Cargando personajes…
+          {{ t('home.loadingCharacters') }}
         </div>
         <div v-else-if="previewCharacters.length === 0" class="text-muted py-4 text-center">
-          Aún no hay personajes.
+          {{ t('home.noCharacters') }}
         </div>
         <div v-else class="row g-4">
           <div
@@ -97,7 +96,7 @@ onMounted(() => {
                   size="sm"
                   :to="{ name: 'character-detail', params: { id: character.id } }"
                 >
-                  Ver más
+                  {{ t('common.viewMore') }}
                 </BButton>
               </template>
             </CharacterCard>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useCharactersStore } from '@/stores/characters'
 import { useGamesStore } from '@/stores/games'
 import type { Character } from '@/types'
@@ -8,6 +9,7 @@ import CharacterCard from '@/components/CharacterCard.vue'
 import CharacterFormComponent from '@/components/CharacterForm.vue'
 import { BButton, BModal, BAlert } from 'bootstrap-vue-next'
 
+const { t } = useI18n()
 const charactersStore = useCharactersStore()
 const gamesStore = useGamesStore()
 const showModal = ref(false)
@@ -66,22 +68,22 @@ function cancelDelete() {
 
 <template>
   <div class="container py-4">
-    <h1 class="mb-4">Administrar Personajes</h1>
+    <h1 class="mb-4">{{ t('characters.adminTitle') }}</h1>
 
     <BAlert v-if="charactersStore.error" variant="danger" dismissible class="mb-3">
       {{ charactersStore.error }}
     </BAlert>
 
     <div class="mb-3">
-      <BButton variant="primary" @click="openCreate">Añadir personaje</BButton>
+      <BButton variant="primary" @click="openCreate">{{ t('characters.addCharacter') }}</BButton>
     </div>
 
     <div v-if="charactersStore.loading && charactersStore.characters.length === 0" class="text-center py-5">
-      Cargando…
+      {{ t('common.loading') }}
     </div>
 
     <div v-else-if="charactersStore.characters.length === 0" class="text-muted py-5">
-      No hay personajes. Añade el primero.
+      {{ t('characters.noCharactersAddFirst') }}
     </div>
 
     <div v-else class="row g-4">
@@ -94,10 +96,10 @@ function cancelDelete() {
           <template #actions>
             <div class="d-flex gap-1">
               <BButton variant="outline-secondary" size="sm" @click="openEdit(character)">
-                Editar
+                {{ t('common.edit') }}
               </BButton>
               <BButton variant="outline-danger" size="sm" @click="askDelete(character)">
-                Borrar
+                {{ t('common.delete') }}
               </BButton>
             </div>
           </template>
@@ -105,25 +107,25 @@ function cancelDelete() {
       </div>
     </div>
 
-    <BModal v-model="showModal" :title="editingCharacter ? 'Editar personaje' : 'Nuevo personaje'" hide-footer>
+    <BModal v-model="showModal" :title="editingCharacter ? t('characters.editCharacter') : t('characters.newCharacter')" hide-footer>
       <CharacterFormComponent
         :key="editingCharacter?.id ?? 'new'"
         :character="editingCharacter"
         @submit="handleSubmit"
       >
         <template #cancel>
-          <BButton variant="secondary" @click="showModal = false">Cancelar</BButton>
+          <BButton variant="secondary" @click="showModal = false">{{ t('common.cancel') }}</BButton>
         </template>
       </CharacterFormComponent>
     </BModal>
 
-    <BModal v-model="showDeleteModal" title="Eliminar personaje" hide-footer>
+    <BModal v-model="showDeleteModal" :title="t('characters.deleteCharacter')" hide-footer>
       <p v-if="characterToDelete">
-        ¿Eliminar <strong>{{ characterToDelete.name }}</strong>?
+        {{ t('characters.deleteCharacterConfirm', { name: characterToDelete.name }) }}
       </p>
       <div class="d-flex gap-2 justify-content-end mt-3">
-        <BButton variant="secondary" @click="cancelDelete">Cancelar</BButton>
-        <BButton variant="danger" @click="confirmDelete">Eliminar</BButton>
+        <BButton variant="secondary" @click="cancelDelete">{{ t('common.cancel') }}</BButton>
+        <BButton variant="danger" @click="confirmDelete">{{ t('common.delete') }}</BButton>
       </div>
     </BModal>
   </div>

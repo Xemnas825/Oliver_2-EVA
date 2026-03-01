@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useCharactersStore } from '@/stores/characters'
 import { BButton, BAlert } from 'bootstrap-vue-next'
 
 const route = useRoute()
 const charactersStore = useCharactersStore()
+const { t } = useI18n()
 
 const id = computed(() => Number(route.params.id))
 
@@ -17,7 +19,7 @@ onMounted(() => {
 <template>
   <div class="container py-4">
     <BButton variant="outline-secondary" class="mb-3" :to="{ name: 'characters' }">
-      ← Volver al listado
+      {{ t('common.backToList') }}
     </BButton>
 
     <BAlert v-if="charactersStore.error" variant="danger">
@@ -25,14 +27,14 @@ onMounted(() => {
     </BAlert>
 
     <div v-else-if="charactersStore.loading" class="text-center py-5">
-      Cargando…
+      {{ t('common.loading') }}
     </div>
 
     <div v-else-if="charactersStore.currentCharacter" class="row">
       <div class="col-lg-8">
         <h1 class="mb-2">{{ charactersStore.currentCharacter.name }}</h1>
         <p v-if="charactersStore.currentCharacter.gameName" class="text-muted mb-3">
-          Juego: {{ charactersStore.currentCharacter.gameName }}
+          {{ t('common.game') }}: {{ charactersStore.currentCharacter.gameName }}
         </p>
         <div v-if="charactersStore.currentCharacter.imageUrl" class="detail-img-wrap">
           <img
@@ -44,7 +46,7 @@ onMounted(() => {
         <p v-if="charactersStore.currentCharacter.description" class="white-space-pre-wrap">
           {{ charactersStore.currentCharacter.description }}
         </p>
-        <p v-else class="text-muted">Sin descripción.</p>
+        <p v-else class="text-muted">{{ t('common.noDescription') }}</p>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { i18n } from '@/i18n'
 import LayoutAuth from '@/layouts/LayoutAuth.vue'
 import LayoutPublic from '@/layouts/LayoutPublic.vue'
 import LayoutAdmin from '@/layouts/LayoutAdmin.vue'
@@ -14,31 +15,31 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'home',
         component: () => import('@/views/HomeView.vue'),
-        meta: { title: 'Inicio' },
+        meta: { titleKey: 'nav.home' },
       },
       {
         path: 'juegos',
         name: 'games',
         component: () => import('@/views/GamesListView.vue'),
-        meta: { title: 'Juegos' },
+        meta: { titleKey: 'games.title' },
       },
       {
         path: 'juegos/:id',
         name: 'game-detail',
         component: () => import('@/views/GameDetailView.vue'),
-        meta: { title: 'Detalle del juego' },
+        meta: { titleKey: 'games.detailTitle' },
       },
       {
         path: 'personajes',
         name: 'characters',
         component: () => import('@/views/CharactersListView.vue'),
-        meta: { title: 'Personajes' },
+        meta: { titleKey: 'characters.title' },
       },
       {
         path: 'personajes/:id',
         name: 'character-detail',
         component: () => import('@/views/CharacterDetailView.vue'),
-        meta: { title: 'Detalle del personaje' },
+        meta: { titleKey: 'characters.detailTitle' },
       },
     ],
   },
@@ -50,7 +51,7 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'login',
         component: () => import('@/views/LoginView.vue'),
-        meta: { title: 'Iniciar sesión' },
+        meta: { titleKey: 'auth.loginTitle' },
       },
     ],
   },
@@ -62,7 +63,7 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'register',
         component: () => import('@/views/RegisterView.vue'),
-        meta: { title: 'Registro' },
+        meta: { titleKey: 'auth.registerTitle' },
       },
     ],
   },
@@ -75,19 +76,19 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'admin',
         component: () => import('@/views/AdminView.vue'),
-        meta: { title: 'Administración' },
+        meta: { titleKey: 'nav.admin' },
       },
       {
         path: 'juegos',
         name: 'admin-games',
         component: () => import('@/views/AdminGamesView.vue'),
-        meta: { title: 'Admin Juegos' },
+        meta: { titleKey: 'games.adminTitle' },
       },
       {
         path: 'personajes',
         name: 'admin-characters',
         component: () => import('@/views/AdminCharactersView.vue'),
-        meta: { title: 'Admin Personajes' },
+        meta: { titleKey: 'characters.adminTitle' },
       },
     ],
   },
@@ -99,7 +100,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  document.title = to.meta.title ? `${to.meta.title} | Wiki Videojuegos` : 'Wiki Videojuegos'
+  const t = i18n.global.t
+  const titleKey = to.meta.titleKey as string | undefined
+  const appName = t('nav.appName')
+  document.title = titleKey ? `${t(titleKey)} | ${appName}` : appName
 
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some((r) => r.meta.requiresAuth)

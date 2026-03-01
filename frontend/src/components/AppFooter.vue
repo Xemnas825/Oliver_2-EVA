@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -6,7 +9,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-6">
-          <span class="fw-bold">Wiki Videojuegos</span> — Listados de juegos y personajes.
+          <span class="fw-bold">{{ t('nav.appName') }}</span> — {{ t('footer.tagline') }}
         </div>
         <div class="col-md-6 text-md-end mt-2 mt-md-0">
           <small>&copy; {{ new Date().getFullYear() }}</small>

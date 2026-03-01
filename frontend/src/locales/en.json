@@ -1,0 +1,123 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "viewMore": "View more",
+    "backToList": "← Back to list",
+    "noDescription": "No description.",
+    "year": "Year",
+    "game": "Game"
+  },
+  "nav": {
+    "appName": "Wiki Videojuegos",
+    "appNameAdmin": "Wiki Videojuegos — Admin",
+    "home": "Home",
+    "games": "Games",
+    "characters": "Characters",
+    "admin": "Administration",
+    "panel": "Panel",
+    "login": "Log in",
+    "register": "Register",
+    "logout": "Log out",
+    "goToSite": "Back to site",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Wiki Videojuegos",
+    "subtitle": "Discover games and characters. Explore entries, descriptions and links to your favourite titles.",
+    "seeAllGames": "View all games →",
+    "seeAllCharacters": "View all characters →",
+    "noGames": "No games yet.",
+    "noCharacters": "No characters yet.",
+    "loadingGames": "Loading games…",
+    "loadingCharacters": "Loading characters…"
+  },
+  "games": {
+    "title": "Games",
+    "noGamesYet": "No games yet.",
+    "adminTitle": "Manage Games",
+    "addGame": "Add game",
+    "noGamesAddFirst": "No games. Add the first one.",
+    "newGame": "New game",
+    "editGame": "Edit game",
+    "deleteGame": "Delete game",
+    "deleteGameConfirm": "Delete {name}?",
+    "detailTitle": "Game detail"
+  },
+  "characters": {
+    "title": "Characters",
+    "filterByGame": "Filter by game:",
+    "all": "All",
+    "noCharacters": "No characters.",
+    "adminTitle": "Manage Characters",
+    "addCharacter": "Add character",
+    "noCharactersAddFirst": "No characters. Add the first one.",
+    "newCharacter": "New character",
+    "editCharacter": "Edit character",
+    "deleteCharacter": "Delete character",
+    "deleteCharacterConfirm": "Delete {name}?",
+    "detailTitle": "Character detail",
+    "selectGame": "Select a game"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "registerTitle": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "repeatPassword": "Repeat password",
+    "submitLogin": "Log in",
+    "submitRegister": "Register",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signUp": "Sign up",
+    "signIn": "Log in",
+    "emailPlaceholder": "email@example.com",
+    "namePlaceholder": "Your name"
+  },
+  "admin": {
+    "title": "Admin panel",
+    "manageGames": "Manage games list and CRUD.",
+    "manageCharacters": "Manage characters list and CRUD.",
+    "goToGames": "Go to Games",
+    "goToCharacters": "Go to Characters"
+  },
+  "gameForm": {
+    "name": "Name",
+    "namePlaceholder": "Game name",
+    "imageUrl": "Image URL",
+    "year": "Year",
+    "yearPlaceholder": "2020",
+    "description": "Description",
+    "descriptionPlaceholder": "Game description"
+  },
+  "characterForm": {
+    "name": "Name",
+    "namePlaceholder": "Character name",
+    "game": "Game",
+    "selectGamePlaceholder": "-- Select a game --",
+    "imageUrl": "Image URL",
+    "description": "Description",
+    "descriptionPlaceholder": "Character description"
+  },
+  "footer": {
+    "tagline": "Games and characters listings."
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email",
+    "passwordRequired": "Password is required",
+    "passwordMin": "At least 6 characters",
+    "nameMin": "At least 2 characters",
+    "confirmPasswordRequired": "Confirm password",
+    "passwordsMatch": "Passwords do not match",
+    "urlInvalid": "Must be a valid URL",
+    "yearInteger": "Integer year",
+    "yearValid": "Valid year",
+    "selectGame": "Select a game"
+  }
+}
