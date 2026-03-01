@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Game } from '@/types'
+import type { Character } from '@/types'
 import { BCard, BCardBody, BCardTitle, BCardText } from 'bootstrap-vue-next'
 
 const props = defineProps<{
-  game: Game
+  character: Character
 }>()
 
 const truncate = (text: string | null, max: number) => {
@@ -13,7 +13,7 @@ const truncate = (text: string | null, max: number) => {
 }
 
 const hasValidImageUrl = computed(() => {
-  const url = props.game?.imageUrl
+  const url = props.character?.imageUrl
   if (!url || typeof url !== 'string') return false
   return url.startsWith('http://') || url.startsWith('https://')
 })
@@ -23,18 +23,18 @@ const hasValidImageUrl = computed(() => {
   <BCard class="h-100 shadow-sm">
     <div v-if="hasValidImageUrl" class="card-img-aspect">
       <img
-        :src="game.imageUrl!"
-        :alt="game.name"
+        :src="character.imageUrl!"
+        :alt="character.name"
         loading="lazy"
       />
     </div>
     <BCardBody class="d-flex flex-column">
-      <BCardTitle>{{ game.name }}</BCardTitle>
-      <BCardText v-if="game.year" class="text-muted small mb-1">
-        Año: {{ game.year }}
+      <BCardTitle>{{ character.name }}</BCardTitle>
+      <BCardText v-if="character.gameName" class="text-muted small mb-1">
+        {{ character.gameName }}
       </BCardText>
       <BCardText class="flex-grow-1 small">
-        {{ truncate(game.description, 120) }}
+        {{ truncate(character.description, 120) }}
       </BCardText>
       <slot name="actions" />
     </BCardBody>

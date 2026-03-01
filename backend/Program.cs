@@ -114,18 +114,69 @@ using (var scope = app.Services.CreateScope())
     }
     var defaultGames = new[]
     {
-        new Game { Name = "The Legend of Zelda: Breath of the Wild", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbf.png", Year = 2017, Description = "Aventura de mundo abierto de Nintendo. Explora Hyrule, resuelve santuarios y enfréntate a Ganon." },
-        new Game { Name = "Elden Ring", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co4j1z.png", Year = 2022, Description = "RPG de acción de FromSoftware con mundo abierto. Historia de George R. R. Martin y gameplay tipo Souls." },
-        new Game { Name = "Red Dead Redemption 2", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbd.png", Year = 2018, Description = "Western de Rockstar. Vive la historia de Arthur Morgan y la banda de Dutch en el Lejano Oeste." },
-        new Game { Name = "God of War Ragnarök", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co6boo.png", Year = 2022, Description = "Secuela de God of War (2018). Kratos y Atreus se enfrentan al Ragnarök en los Nueve Reinos." },
-        new Game { Name = "Hollow Knight", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xzm.png", Year = 2017, Description = "Metroidvania indie. Explora Hallownest, mejora habilidades y descubre secretos en un mundo de insectos." },
-        new Game { Name = "Celeste", ImageUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbr.png", Year = 2018, Description = "Plataformas 2D de precisión. Madeline escala la montaña Celeste en una historia sobre ansiedad y superación." }
+        new Game { Name = "The Legend of Zelda: Breath of the Wild", ImageUrl = "https://i.blogs.es/15da49/zelda00/1366_2000.webp", Year = 2017, Description = "Aventura de mundo abierto de Nintendo. Explora Hyrule, resuelve santuarios y enfréntate a Ganon." },
+        new Game { Name = "Elden Ring", ImageUrl = "https://i.blogs.es/c0b150/1024_2000/1366_2000.jpeg", Year = 2022, Description = "RPG de acción de FromSoftware con mundo abierto. Historia de George R. R. Martin y gameplay tipo Souls." },
+        new Game { Name = "Red Dead Redemption 2", ImageUrl = "https://i.blogs.es/juegos/13424/red_dead_3__nombre_temporal_/fotos/maestras/red_dead_3__nombre_temporal_-4030936.jpg", Year = 2018, Description = "Western de Rockstar. Vive la historia de Arthur Morgan y la banda de Dutch en el Lejano Oeste." },
+        new Game { Name = "God of War Ragnarök", ImageUrl = "https://static.wikia.nocookie.net/godofwar/images/c/ca/Portada_God_of_War_Ragnarok.png/revision/latest?cb=20211008000423&path-prefix=es", Year = 2022, Description = "Secuela de God of War (2018). Kratos y Atreus se enfrentan al Ragnarök en los Nueve Reinos." },
+        new Game { Name = "Hollow Knight", ImageUrl = "https://i.3djuegos.com/juegos/11596/hollow_knight/fotos/ficha/hollow_knight-3915488.webp", Year = 2017, Description = "Metroidvania indie. Explora Hallownest, mejora habilidades y descubre secretos en un mundo de insectos." },
+        new Game { Name = "Celeste", ImageUrl = "https://i.3djuegos.com/juegos/14243/celeste/fotos/ficha/celeste-3938712.webp", Year = 2018, Description = "Plataformas 2D de precisión. Madeline escala la montaña Celeste en una historia sobre ansiedad y superación." }
     };
     foreach (var game in defaultGames)
     {
-        if (!db.Games.Any(g => g.Name == game.Name))
+        var existing = db.Games.FirstOrDefault(g => g.Name == game.Name);
+        if (existing == null)
         {
             db.Games.Add(game);
+        }
+        else
+        {
+            existing.ImageUrl = game.ImageUrl;
+            existing.Year = game.Year;
+            existing.Description = game.Description;
+        }
+    }
+    db.SaveChanges();
+
+    // Seed personajes: insertar si no existen, o actualizar imagen/descripción si ya existen (así los cambios en las URLs se aplican al reiniciar)
+    var zelda = db.Games.FirstOrDefault(g => g.Name.Contains("Zelda"));
+    var elden = db.Games.FirstOrDefault(g => g.Name.Contains("Elden"));
+    var rdr2 = db.Games.FirstOrDefault(g => g.Name.Contains("Red Dead"));
+    var gow = db.Games.FirstOrDefault(g => g.Name.Contains("God of War"));
+    var hollow = db.Games.FirstOrDefault(g => g.Name.Contains("Hollow Knight"));
+    var celeste = db.Games.FirstOrDefault(g => g.Name.Contains("Celeste"));
+
+    var defaultCharacters = new List<Character>();
+    if (zelda != null)
+    {
+        defaultCharacters.Add(new Character { Name = "Link", GameId = zelda.Id, ImageUrl = "https://www.universozelda.com/wiki/images/f/f6/Artwork_Link_adulto_OoT.png", Description = "El héroe de Hyrule. Portador de la Espada Maestra, despierta tras un sueño de cien años para enfrentarse a Ganon y salvar a la princesa Zelda." });
+        defaultCharacters.Add(new Character { Name = "Zelda", GameId = zelda.Id, ImageUrl = "https://static.wikia.nocookie.net/zelda/images/3/3d/TotK_-_Zelda_artwork_oficial.jpeg/revision/latest?cb=20230220230004&path-prefix=es", Description = "Princesa de Hyrule y guardiana del poder sagrado. Mantiene sellado a Ganon en el castillo mientras espera a Link." });
+    }
+    if (elden != null)
+        defaultCharacters.Add(new Character { Name = "Melina", GameId = elden.Id, ImageUrl = "https://i.pinimg.com/736x/a6/49/42/a649426494b679afb3050d9d779d68a7.jpg", Description = "Misteriosa doncella que ofrece al Sinluz un acuerdo: guiarle al Árbol Áureo a cambio de que la lleve hasta la llama del Destino." });
+    if (rdr2 != null)
+        defaultCharacters.Add(new Character { Name = "Arthur Morgan", GameId = rdr2.Id, ImageUrl = "https://media.rockstargames.com/rockstargames-newsite/uploads/bcb6fd3bd0fbc7092e9d1973bb736f2c7ae05a7d.jpg", Description = "Protagonista y pistolero de la banda de Dutch van der Linde. Hombre leal que cuestiona el rumbo de la banda en el Lejano Oeste." });
+    if (gow != null)
+    {
+        defaultCharacters.Add(new Character { Name = "Kratos", GameId = gow.Id, ImageUrl = "https://i.pinimg.com/1200x/46/0c/be/460cbebf9f459a1d82c3ff9ed54e05c4.jpg", Description = "Ex dios de la guerra de Esparta. Ahora vive en los reinos nórdicos con su hijo Atreus, intentando dejar atrás su pasado de sangre." });
+        defaultCharacters.Add(new Character { Name = "Atreus", GameId = gow.Id, ImageUrl = "https://i.pinimg.com/1200x/1b/56/d9/1b56d9bf02cd5c426fba8eebbbc09d74.jpg", Description = "Hijo de Kratos y Faye. Aprende a ser un guerrero y descubre su verdadera naturaleza divina mientras acompaña a su padre." });
+    }
+    if (hollow != null)
+        defaultCharacters.Add(new Character { Name = "El Caballero", GameId = hollow.Id, ImageUrl = "https://static.wikia.nocookie.net/ficcion-sin-limites/images/a/a8/TK.png/revision/latest?cb=20240428134831&path-prefix=es", Description = "Protagonista silencioso. Un pequeño vessel que explora las ruinas del reino de Hallownest en busca de su propósito." });
+    if (celeste != null)
+        defaultCharacters.Add(new Character { Name = "Madeline", GameId = celeste.Id, ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/42/Celeste_character_Madeline.png", Description = "Una joven que decide escalar la montaña Celeste. En el camino afronta su ansiedad y sus miedos personificados en Part of Her." });
+
+    foreach (var ch in defaultCharacters)
+    {
+        var existing = db.Characters.FirstOrDefault(c => c.Name == ch.Name);
+        if (existing == null)
+        {
+            db.Characters.Add(ch);
+        }
+        else
+        {
+            existing.GameId = ch.GameId;
+            existing.ImageUrl = ch.ImageUrl;
+            existing.Description = ch.Description;
         }
     }
     db.SaveChanges();

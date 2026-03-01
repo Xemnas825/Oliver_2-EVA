@@ -35,13 +35,13 @@ onMounted(() => {
         <p v-if="gamesStore.currentGame.year" class="text-muted mb-3">
           Año: {{ gamesStore.currentGame.year }}
         </p>
-        <img
-          v-if="gamesStore.currentGame.imageUrl"
-          :src="gamesStore.currentGame.imageUrl"
-          :alt="gamesStore.currentGame.name"
-          class="img-fluid rounded mb-3"
-          style="max-height: 400px; object-fit: cover"
-        />
+        <div v-if="gamesStore.currentGame.imageUrl" class="detail-img-wrap">
+          <img
+            :src="gamesStore.currentGame.imageUrl"
+            :alt="gamesStore.currentGame.name"
+            loading="lazy"
+          />
+        </div>
         <p v-if="gamesStore.currentGame.description" class="white-space-pre-wrap">
           {{ gamesStore.currentGame.description }}
         </p>
@@ -50,3 +50,20 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.detail-img-wrap {
+  max-width: 500px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: var(--bs-secondary-bg);
+  margin-bottom: 1rem;
+}
+.detail-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+</style>

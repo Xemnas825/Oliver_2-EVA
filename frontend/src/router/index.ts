@@ -34,6 +34,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/CharactersListView.vue'),
         meta: { title: 'Personajes' },
       },
+      {
+        path: 'personajes/:id',
+        name: 'character-detail',
+        component: () => import('@/views/CharacterDetailView.vue'),
+        meta: { title: 'Detalle del personaje' },
+      },
     ],
   },
   {
