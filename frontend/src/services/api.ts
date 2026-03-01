@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-// Vacío = usar mismo origen; Vite hace proxy de /api a http://localhost:8080
 const baseURL = (import.meta.env.VITE_API_URL ?? '').trim()
 
 export const api = axios.create({
