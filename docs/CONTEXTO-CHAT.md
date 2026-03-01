@@ -21,8 +21,8 @@ Resumen para retomar el proyecto desde otro PC sin depender del historial de cha
 | `feature/layouts` | ✅ Hecha (LayoutAuth, LayoutPublic, LayoutAdmin, Header/Footer) |
 | `feature/auth` | ✅ Hecha (login, registro, store auth, guards, VeeValidate+Yup) |
 | `feature/games` | ✅ Hecha (store games, GameCard, GamesListView, GameDetailView, AdminGamesView CRUD, GameForm, seed 6 juegos) |
-| `feature/characters` | Pendiente |
-| `feature/home` | Pendiente |
+| `feature/characters` | ✅ Hecha (store, listado, detalle, AdminCharactersView CRUD, seed personajes) |
+| `feature/home` | ✅ Hecha (hero, vista previa juegos y personajes, enlaces a listados) |
 
 ---
 
@@ -53,9 +53,9 @@ npm run dev
 
 **Frontend:**  
 - Router: `frontend/src/router/index.ts`  
-- Stores: `auth.ts`, `games.ts`  
-- Vistas: LoginView, RegisterView, GamesListView, GameDetailView, AdminGamesView  
-- Componentes: AppHeader, GameCard, GameForm  
+- Stores: `auth.ts`, `games.ts`, `characters.ts`  
+- Vistas: LoginView, RegisterView, GamesListView, GameDetailView, AdminGamesView, CharactersListView, CharacterDetailView, AdminCharactersView, HomeView  
+- Componentes: AppHeader, GameCard, GameForm, CharacterCard, CharacterForm  
 - API: `frontend/src/services/api.ts` (axios, baseURL, interceptor 401)
 
 ---
@@ -72,8 +72,6 @@ npm run dev
 
 ## Próximos pasos posibles
 
-- Feature **characters**: store, listado público, detalle, AdminCharactersView CRUD.
-- Feature **home**: página principal pública.
 - Actualizar este archivo cuando se cierre una rama o se añadan features.
 
 ---
