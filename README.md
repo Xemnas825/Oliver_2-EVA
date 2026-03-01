@@ -1,4 +1,3 @@
-# Wiki de Videojuegos
 
 ## Credenciales de prueba
 
