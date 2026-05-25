@@ -41,6 +41,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/CharacterDetailView.vue'),
         meta: { titleKey: 'characters.detailTitle' },
       },
+      {
+        path: 'favoritos',
+        name: 'favorites',
+        component: () => import('@/views/FavoritesView.vue'),
+        meta: { titleKey: 'favorites.title', requiresAuth: true },
+      },
     ],
   },
   {

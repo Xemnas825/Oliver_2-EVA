@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { api } from '@/services/api'
+import { useFavoritesStore } from '@/stores/favorites'
 import type { User } from '@/types'
 
 const TOKEN_KEY = 'token'
@@ -37,6 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function clearAuth() {
+    useFavoritesStore().resetFavorites()
     token.value = null
     user.value = null
     error.value = null
@@ -56,6 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
         password,
       })
       setAuth(data.token, data.user)
+      useFavoritesStore().loadFavorites()
       return true
     } catch (err: unknown) {
       const msg = err && typeof err === 'object' && 'response' in err
@@ -75,6 +78,7 @@ export const useAuthStore = defineStore('auth', () => {
         name,
       })
       setAuth(data.token, data.user)
+      useFavoritesStore().loadFavorites()
       return true
     } catch (err: unknown) {
       const msg = err && typeof err === 'object' && 'response' in err

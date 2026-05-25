@@ -23,7 +23,17 @@
     "register": "Registro",
     "logout": "Cerrar sesión",
     "goToSite": "Salir al sitio",
-    "language": "Idioma"
+    "language": "Idioma",
+    "favorites": "Mis favoritos"
+  },
+  "favorites": {
+    "title": "Mis favoritos",
+    "empty": "No tienes favoritos guardados.",
+    "gamesSection": "Juegos favoritos",
+    "charactersSection": "Personajes favoritos",
+    "remove": "Quitar de favoritos",
+    "add": "Añadir a favoritos",
+    "inFavorites": "En favoritos"
   },
   "home": {
     "title": "Wiki Videojuegos",

@@ -52,6 +52,9 @@ function changeLocale(locale: 'es' | 'en') {
             <BDropdownItem href="#" @click.prevent="changeLocale('en')">English</BDropdownItem>
           </BNavItemDropdown>
           <template v-if="auth.isAuthenticated">
+            <BNavItem to="/favoritos" :active="route.name === 'favorites'">
+              {{ t('nav.favorites') }}
+            </BNavItem>
             <BNavItem v-if="auth.isAdmin" to="/admin" :active="route.path.startsWith('/admin')">
               {{ t('nav.admin') }}
             </BNavItem>

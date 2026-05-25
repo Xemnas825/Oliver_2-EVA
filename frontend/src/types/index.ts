@@ -24,3 +24,9 @@ export interface Character {
   description: string | null
   createdAt: string
 }
+
+export type FavoriteType = 'game' | 'character'
+export interface FavoriteItem {
+  type: FavoriteType
+  id: number
+}

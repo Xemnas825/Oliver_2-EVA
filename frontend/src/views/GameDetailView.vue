@@ -3,6 +3,7 @@ import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useGamesStore } from '@/stores/games'
+import FavoriteButton from '@/components/FavoriteButton.vue'
 import { BButton, BAlert } from 'bootstrap-vue-next'
 
 const route = useRoute()
@@ -32,7 +33,10 @@ onMounted(() => {
 
     <div v-else-if="gamesStore.currentGame" class="row">
       <div class="col-lg-8">
-        <h1 class="mb-2">{{ gamesStore.currentGame.name }}</h1>
+        <div class="detail-actions-bar d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+          <h1 class="mb-0">{{ gamesStore.currentGame.name }}</h1>
+          <FavoriteButton type="game" :id="id" size="md" />
+        </div>
         <p v-if="gamesStore.currentGame.year" class="text-muted mb-3">
           {{ t('common.year') }}: {{ gamesStore.currentGame.year }}
         </p>
@@ -53,6 +57,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.detail-actions-bar {
+  padding: 1rem 1.25rem;
+  background: var(--bs-secondary-bg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--bs-border-color);
+}
+
 .detail-img-wrap {
   max-width: 500px;
   aspect-ratio: 3 / 4;

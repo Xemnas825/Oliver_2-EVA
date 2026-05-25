@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Character } from '@/types'
+import FavoriteButton from '@/components/FavoriteButton.vue'
 import { BCard, BCardBody, BCardTitle, BCardText } from 'bootstrap-vue-next'
 
-const props = defineProps<{
-  character: Character
-}>()
+const props = withDefaults(
+  defineProps<{
+    character: Character
+    showFavorite?: boolean
+  }>(),
+  { showFavorite: true }
+)
 
 const truncate = (text: string | null, max: number) => {
   if (!text) return ''
@@ -36,7 +41,10 @@ const hasValidImageUrl = computed(() => {
       <BCardText class="flex-grow-1 small">
         {{ truncate(character.description, 120) }}
       </BCardText>
-      <slot name="actions" />
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <FavoriteButton v-if="showFavorite" type="character" :id="character.id" />
+        <slot name="actions" />
+      </div>
     </BCardBody>
   </BCard>
 </template>

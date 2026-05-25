@@ -2,11 +2,16 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Game } from '@/types'
+import FavoriteButton from '@/components/FavoriteButton.vue'
 import { BCard, BCardBody, BCardTitle, BCardText } from 'bootstrap-vue-next'
 
-const props = defineProps<{
-  game: Game
-}>()
+const props = withDefaults(
+  defineProps<{
+    game: Game
+    showFavorite?: boolean
+  }>(),
+  { showFavorite: true }
+)
 const { t } = useI18n()
 
 const truncate = (text: string | null, max: number) => {
@@ -38,7 +43,10 @@ const hasValidImageUrl = computed(() => {
       <BCardText class="flex-grow-1 small">
         {{ truncate(game.description, 120) }}
       </BCardText>
-      <slot name="actions" />
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <FavoriteButton v-if="showFavorite" type="game" :id="game.id" />
+        <slot name="actions" />
+      </div>
     </BCardBody>
   </BCard>
 </template>
